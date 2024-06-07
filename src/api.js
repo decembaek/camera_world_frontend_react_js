@@ -9,13 +9,33 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-export const getMe = () => {};
-
-export const emailLogin = async () => {
-  const response = await instance.post('/user/log-in/', {
+export const getMe = async () => {
+  const response = await instance.get(`user/me`, {
     headers: {
       'X-CSRFToken': Cookie.get('csrftoken') || '',
     },
   });
+  return response.data;
+};
+
+export const logOut = async () => {
+  const response = await instance.post('user/log-out', null, {
+    headers: {
+      'X-CSRFToken': Cookie.get('csrftoken') || '',
+    },
+  });
+  return response.data;
+};
+
+export const emailLogin = async ({ email, password }) => {
+  const response = await instance.post(
+    '/user/log-in',
+    { email, password },
+    {
+      headers: {
+        'X-CSRFToken': Cookie.get('csrftoken') || '',
+      },
+    }
+  );
   return response.data;
 };

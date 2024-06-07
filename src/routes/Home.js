@@ -45,7 +45,7 @@ const Home = () => {
           columnClassName="my-masonry-grid_column"
         >
           {images.map(img => (
-            <Gallery img={img} />
+            <Gallery key={img.id} img={img} />
           ))}
         </Masonry>
       </Center>

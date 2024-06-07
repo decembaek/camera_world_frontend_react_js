@@ -22,33 +22,30 @@ import {
   HStack,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { FaAt, FaLock } from 'react-icons/fa';
 import { emailLogin } from '../api';
 
-const LoginModal = ({ isOpen, onClose }) => {
+const SignupModal = ({ isOpen, onClose }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
-  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: emailLogin,
     onSuccess: ({ ok }) => {
       console.log(ok);
-      queryClient.refetchQueries(['me']);
+      console.log('ok');
     },
-    onError: error => {
-      console.log(error);
-      queryClient.refetchQueries(['me']);
+    onError: () => {
+      console.log('error');
     },
   });
   const onSubmit = ({ email, password }) => {
     console.log(email, password);
     mutation.mutate({ email, password });
-    onClose();
     reset();
   };
   return (
@@ -66,7 +63,7 @@ const LoginModal = ({ isOpen, onClose }) => {
             <Heading mb={4} size={'lg'} color={'gray.500'}>
               사이트 방문을 환영합니다
             </Heading>
-            <Text>로그인 해주세요</Text>
+            <Text>회원가입 해주세요</Text>
           </VStack>
         </ModalHeader>
         <ModalBody as={'form'} p={10} onSubmit={handleSubmit(onSubmit)}>
@@ -98,7 +95,7 @@ const LoginModal = ({ isOpen, onClose }) => {
               />
             </InputGroup>
             <Button colorScheme="green" w={'80%'} type="submit">
-              로그인
+              회원가입
             </Button>
             <Button colorScheme="gray" w={'80%'}>
               계정찾기
@@ -128,4 +125,4 @@ const LoginModal = ({ isOpen, onClose }) => {
   );
 };
 
-export default LoginModal;
+export default SignupModal;
