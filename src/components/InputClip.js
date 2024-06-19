@@ -11,8 +11,10 @@ import React from 'react';
 const InputClip = ({ clip, register, index }) => {
   return (
     <>
-      <Text>{clip.name}</Text>
+      <Text fontSize={'2xl'}>이미지 마다 설명을 작성할 수 있어요</Text>
+
       <Box
+        mt={5}
         key={clip.id}
         w={'100%'}
         h={'700px'}
@@ -38,7 +40,7 @@ const InputClip = ({ clip, register, index }) => {
           </Box>
         )}
       </Box>
-      <InputGroup>
+      <InputGroup mt={10}>
         <InputLeftAddon>이미지 설명</InputLeftAddon>
         <Input placeholder="예시 : 자전거를 보는 나 " />
       </InputGroup>

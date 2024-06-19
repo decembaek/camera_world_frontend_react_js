@@ -12,6 +12,7 @@ export const SearchTest = () => {
   const [position, setPosition] = useState();
 
   const onSubmit = ({ search }) => {
+    console.log(search);
     if (!map) return;
     const ps = new window.kakao.maps.services.Places();
 
@@ -72,7 +73,10 @@ export const SearchTest = () => {
           <MapMarker position={position ?? center} />
         </Map>
         <Input {...register('search')} />
-        <Button type="submit">Search</Button>
+        {/* <Button type="submit">Search</Button> */}
+        <Button type="button" onClick={handleSubmit(onSubmit)}>
+          Search
+        </Button>
       </Box>
     </>
   );
