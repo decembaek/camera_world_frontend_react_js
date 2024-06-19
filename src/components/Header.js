@@ -16,6 +16,7 @@ import {
   useDisclosure,
   Box,
   Avatar,
+  Tooltip,
 } from '@chakra-ui/react';
 import { FaSearch, FaPaperclip } from 'react-icons/fa';
 // import { FaPaperclip } from 'react-icons/fa6';
@@ -24,6 +25,7 @@ import SignupModal from './SignupModal';
 import useUser from '../lib/useUser';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { logOut } from '../api';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const { userLoading, user, isLoggedIn } = useUser();
@@ -107,9 +109,9 @@ const Header = () => {
             <InputGroup
               w={{
                 base: '5%',
-                sm: '15%',
-                md: '55%',
-                lg: '65%',
+                sm: '10%',
+                md: '40%',
+                lg: '50%',
               }}
               ml={5}
             >
@@ -119,8 +121,12 @@ const Header = () => {
               <Input variant={'filled'} placeholder="search" size={'lg'} />
               <InputRightElement></InputRightElement>
             </InputGroup>
-            <Text>카메라 찾기</Text>
-            <Text>브랜드관</Text>
+            <Tooltip label="나만의 카메라를 찾아보세요">
+              <Text>카메라 찾기</Text>
+            </Tooltip>
+            <Tooltip label="카메라 브랜드별로 감상하세요">
+              <Text>브랜드관</Text>
+            </Tooltip>
             {!userLoading ? (
               !isLoggedIn ? (
                 <>
@@ -133,6 +139,13 @@ const Header = () => {
                 </>
               ) : (
                 <>
+                  <Tooltip label="본인의 작품을 업로드 하세요">
+                    <Link to={'upload'}>
+                      <Button fontWeight={'normal'} variant={'none'}>
+                        클립 만들기
+                      </Button>
+                    </Link>
+                  </Tooltip>
                   <VStack>
                     <Menu>
                       <MenuButton>
@@ -159,7 +172,7 @@ const Header = () => {
         <SignupModal onClose={onCloseSignup} isOpen={isOpenSignup} />
         <Divider orientation="horizontal" w={'100%'} />
       </Box>
-      <Box height={'50px'}></Box>
+      <Box height={'70px'}></Box>
     </>
   );
 };
