@@ -4,15 +4,12 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
-  Text,
 } from '@chakra-ui/react';
 import React from 'react';
 
 const InputClip = ({ clip, register, index }) => {
   return (
     <>
-      <Text fontSize={'2xl'}>이미지 마다 설명을 작성할 수 있어요</Text>
-
       <Box
         mt={5}
         key={clip.id}

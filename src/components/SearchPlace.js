@@ -22,7 +22,7 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-export const SearchPlace = ({ isOpen, onClose }) => {
+export const SearchPlace = ({ isOpen, onClose, locationCallback }) => {
   const { register, handleSubmit } = useForm();
   // const [info, setInfo] = useState();
   const [markers, setMarkers] = useState([]);
@@ -167,7 +167,7 @@ export const SearchPlace = ({ isOpen, onClose }) => {
                 <MapMarker
                   key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
                   position={marker.position}
-                  onClick={event => {
+                  onClick={() => {
                     handleMarkerClick(marker);
                   }}
                 >
@@ -235,7 +235,11 @@ export const SearchPlace = ({ isOpen, onClose }) => {
                       </Box>
 
                       <HStack>
-                        <Button mt={2} colorScheme="green">
+                        <Button
+                          mt={2}
+                          colorScheme="green"
+                          onClick={() => locationCallback(result)}
+                        >
                           지역 등록
                         </Button>
                         <Button mt={2}>네비게이션</Button>
