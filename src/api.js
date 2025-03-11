@@ -10,11 +10,7 @@ const instance = axios.create({
 });
 
 export const getMe = async () => {
-  const response = await instance.get(`user/me`, {
-    headers: {
-      'X-CSRFToken': Cookie.get('csrftoken') || '',
-    },
-  });
+  const response = await instance.get(`user/me`);
   return response.data;
 };
 

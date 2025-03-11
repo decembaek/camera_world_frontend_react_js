@@ -8,6 +8,7 @@ import {
   HStack,
   Heading,
   Input,
+  Link,
   Modal,
   ModalCloseButton,
   ModalContent,
@@ -36,6 +37,9 @@ export const SearchPlace = ({ isOpen, onClose, locationCallback }) => {
 
   // 검색 결과
   const [searchResults, setSearchResults] = useState([]);
+
+  // 지도 클리 결과
+  const [clickResult, setClickResult] = useState();
 
   // 좌표로 주소 변환
   // const searchLocationFromCoords = (coords, callback) => {}
@@ -95,11 +99,29 @@ export const SearchPlace = ({ isOpen, onClose, locationCallback }) => {
       latlng.getLat(),
       (result, status) => {
         if (status === window.kakao.maps.services.Status.OK) {
+          setClickResult(result[0]);
           setClickedLocationInfo(result[0].address.address_name);
           onSubmit({ search: result[0].address.address_name });
         }
       }
     );
+  };
+
+  // 지도 화면 클릭 후 위치 선택
+  const mapClickAndLocationSelect = () => {
+    if (clickResult) {
+      const address_name = clickResult.address.address_name;
+      const road_address_name = clickResult.road_address.address_name;
+      const place_name = clickResult.road_address.building_name;
+      const category_name = '';
+      const addressDice = {
+        address_name,
+        road_address_name,
+        place_name,
+        category_name,
+      };
+      locationCallback(addressDice);
+    }
   };
 
   // 마커 클릭 이벤트
@@ -116,6 +138,7 @@ export const SearchPlace = ({ isOpen, onClose, locationCallback }) => {
         positionClick.lat,
         (result, status) => {
           if (status === window.kakao.maps.services.Status.OK) {
+            setClickResult(result[0]);
             setClickedLocationInfo(result[0].address.address_name);
             onSubmit({
               search: result[0].address.address_name,
@@ -151,7 +174,12 @@ export const SearchPlace = ({ isOpen, onClose, locationCallback }) => {
                 <HStack>
                   <Text>선택 위치: </Text>
                   <Text as={'b'}>{clickedLocationInfo}</Text>
-                  <Button colorScheme="green">선택 위치로 지역 등록하기</Button>
+                  <Button
+                    colorScheme="green"
+                    onClick={mapClickAndLocationSelect}
+                  >
+                    선택 위치로 지역 등록하기
+                  </Button>
                 </HStack>
               </Box>
             )}
@@ -242,7 +270,14 @@ export const SearchPlace = ({ isOpen, onClose, locationCallback }) => {
                         >
                           지역 등록
                         </Button>
-                        <Button mt={2}>네비게이션</Button>
+                        <Link
+                          mt={2}
+                          href={result.place_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          네비게이션
+                        </Link>
                       </HStack>
                     </Box>
                   ))}

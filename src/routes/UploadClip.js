@@ -338,6 +338,7 @@ const UploadClip = () => {
           </>
         )}
 
+        {/* 장소 검색 모달창 */}
         <SearchPlace
           isOpen={isOpen}
           onClose={onClose}

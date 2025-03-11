@@ -29,6 +29,7 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
   const { userLoading, user, isLoggedIn } = useUser();
+  console.log(userLoading, user, isLoggedIn);
   const queryClient = useQueryClient();
   const {
     isOpen: isOpenLogin,
@@ -81,7 +82,15 @@ const Header = () => {
         boxShadow={'md'}
       >
         <VStack>
-          <HStack p={2} justifyContent={'space-between'} spacing={1} w={'100%'}>
+          <HStack
+            pt={2}
+            pb={2}
+            pr={10}
+            pl={10}
+            justifyContent={'space-between'}
+            spacing={3}
+            w={'100%'}
+          >
             <HStack>
               {/* <Image
                 boxSize={'50px'}
@@ -92,19 +101,22 @@ const Header = () => {
                 <FaPaperclip size={48} />
               </Box> */}
 
-              <VStack spacing={0}>
-                <HStack spacing={1}>
-                  <Box color={'green.800'}>
-                    <FaPaperclip size={30} />
-                  </Box>
-                  <Text color={'green.900'} fontSize={'2xl'}>
-                    Clip
+              <Link to={'/'}>
+                <VStack spacing={0}>
+                  <HStack spacing={1}>
+                    <Box color={'green.800'}>
+                      <FaPaperclip size={30} />
+                    </Box>
+                    <Text color={'green.900'} fontSize={'2xl'}>
+                      Clip
+                    </Text>
+                  </HStack>
+
+                  <Text color={'green.700'} fontSize={'xs'}>
+                    모든 순간을 클립으로
                   </Text>
-                </HStack>
-                <Text color={'green.700'} fontSize={'xs'}>
-                  모든 순간을 클립으로
-                </Text>
-              </VStack>
+                </VStack>
+              </Link>
             </HStack>
             <InputGroup
               w={{
@@ -121,9 +133,6 @@ const Header = () => {
               <Input variant={'filled'} placeholder="search" size={'lg'} />
               <InputRightElement></InputRightElement>
             </InputGroup>
-            <Tooltip label="나만의 카메라를 찾아보세요">
-              <Text>카메라 찾기</Text>
-            </Tooltip>
             <Tooltip label="카메라 브랜드별로 감상하세요">
               <Text>브랜드관</Text>
             </Tooltip>
